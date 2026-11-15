@@ -1,13 +1,43 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import model.Driver;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+public class Main {
+
+    public static void main(String[] args) {
+
+        // Create Driver Object
+        Driver driver = new Driver(
+                1,
+                "Kamal",
+                "kamal@gmail.com",
+                "12345",
+                "0771234567",
+                "B123456"
+        );
+
+        // Display Driver Details
+        System.out.println("===== DRIVER DETAILS =====");
+
+        driver.viewProfile();
+
+        System.out.println("License Number: " + driver.getLicenseNumber());
+
+        // Driver Methods
+        System.out.println("\n===== DRIVER ACTIVITIES =====");
+
+        driver.login("12345");
+
+        driver.viewAssignedBus();
+
+        driver.viewRoute();
+
+        driver.updateTripStatus();
+
+        driver.reportBreakdown();
+
+        driver.reportAccident();
+
+        driver.requestReplacementBus();
+
+        driver.logout();
     }
 }
