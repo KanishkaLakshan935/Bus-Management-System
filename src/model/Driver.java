@@ -1,6 +1,7 @@
 package model;
+import interfaces.DriverActions;
 
-public class Driver extends User {
+public class Driver extends User implements DriverActions {
 
     private String licenseNumber;
 
