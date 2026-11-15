@@ -1,4 +1,5 @@
 package interfaces;
+import exceptions.InvalidTripStatusException;
 
 public interface DriverActions {
 
@@ -6,7 +7,8 @@ public interface DriverActions {
 
     void viewRoute();
 
-    void updateTripStatus();
+    void updateTripStatus(String status)
+            throws InvalidTripStatusException;
 
     void reportBreakdown();
 

@@ -1,4 +1,6 @@
 import model.Driver;
+import model.Driver;
+import exceptions.InvalidTripStatusException;
 
 public class Main {
 
@@ -19,7 +21,19 @@ public class Main {
 
         driver.viewRoute();
 
-        driver.updateTripStatus();
+        try {
+
+            driver.updateTripStatus("Started");
+
+            driver.updateTripStatus("Completed");
+
+            driver.updateTripStatus("WrongStatus");
+
+        } catch (InvalidTripStatusException e) {
+
+            System.out.println("Error: " + e.getMessage());
+
+        }
 
         driver.reportBreakdown();
 

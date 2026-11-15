@@ -1,5 +1,6 @@
 package model;
 import interfaces.DriverActions;
+import exceptions.InvalidTripStatusException;
 
 public class Driver extends User implements DriverActions {
 
@@ -36,8 +37,22 @@ public class Driver extends User implements DriverActions {
     }
 
     // Update Trip Status
-    public void updateTripStatus() {
-        System.out.println("Trip status updated.");
+    @Override
+    public void updateTripStatus(String status)
+            throws InvalidTripStatusException {
+
+        if (status.equalsIgnoreCase("Started")
+                || status.equalsIgnoreCase("Completed")
+                || status.equalsIgnoreCase("Cancelled")) {
+
+            System.out.println("Trip status updated: " + status);
+
+        } else {
+
+            throw new InvalidTripStatusException(
+                    "Invalid trip status: " + status
+            );
+        }
     }
 
     // Report Breakdown
