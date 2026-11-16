@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DriverFileHandler {
 
@@ -59,5 +61,43 @@ public class DriverFileHandler {
 
             System.out.println("Error reading drivers: " + e.getMessage());
         }
+    }
+    // Load Drivers from Text File
+    public List<Driver> loadDrivers() {
+
+        List<Driver> drivers = new ArrayList<>();
+
+        try (BufferedReader reader =
+                     new BufferedReader(new FileReader(fileName))) {
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+
+                String[] data = line.split(",");
+
+                if (data.length == 6) {
+
+                    Driver driver = new Driver(
+                            Integer.parseInt(data[0]),
+                            data[1],
+                            data[2],
+                            data[3],
+                            data[4],
+                            data[5]
+                    );
+
+                    drivers.add(driver);
+                }
+            }
+
+            System.out.println("Drivers loaded successfully!");
+
+        } catch (IOException | NumberFormatException e) {
+
+            System.out.println("Error loading drivers: " + e.getMessage());
+        }
+
+        return drivers;
     }
 }

@@ -2,6 +2,7 @@ import model.Driver;
 import model.User;
 import service.DriverService;
 import filehandling.DriverFileHandler;
+import java.util.List;
 
 public class Main {
 
@@ -54,6 +55,27 @@ public class Main {
         System.out.println("\n----- POLYMORPHISM TEST -----");
 
         user.displayRole();
+
+        // Load Drivers from Text File
+        List<Driver> loadedDrivers = fileHandler.loadDrivers();
+
+// Display Loaded Drivers
+        System.out.println("\n----- LOADED DRIVERS -----");
+
+        for (Driver driver : loadedDrivers) {
+
+            System.out.println("Driver ID: " + driver.getUserId());
+
+            System.out.println("Driver Name: " + driver.getName());
+
+            System.out.println("Driver Email: " + driver.getEmail());
+
+            System.out.println("Driver Phone: " + driver.getPhone());
+
+            System.out.println("License Number: " + driver.getLicenseNumber());
+
+            System.out.println("----------------------");
+        }
 
     }
 }
