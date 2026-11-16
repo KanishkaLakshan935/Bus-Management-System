@@ -99,5 +99,7 @@ public abstract class User {
         System.out.println("Phone: " + phone);
 
     }
+    // Add Abstract
+    public abstract void displayRole();
 
 }

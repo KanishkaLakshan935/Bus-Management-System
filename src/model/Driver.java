@@ -69,4 +69,9 @@ public class Driver extends User implements DriverActions {
     public void requestReplacementBus() {
         System.out.println("Replacement bus requested.");
     }
+
+    @Override
+    public void displayRole() {
+        System.out.println("User Role: Driver");
+    }
 }

@@ -1,4 +1,5 @@
 import model.Driver;
+import model.User;
 import service.DriverService;
 import filehandling.DriverFileHandler;
 
@@ -39,6 +40,20 @@ public class Main {
 
         // Read Drivers from Text File
         fileHandler.readDrivers();
+
+        // Polymorphism
+        User user = new Driver(
+                3,
+                "Sunil",
+                "sunil@gmail.com",
+                "11111",
+                "0712345678",
+                "B789456"
+        );
+
+        System.out.println("\n----- POLYMORPHISM TEST -----");
+
+        user.displayRole();
 
     }
 }
