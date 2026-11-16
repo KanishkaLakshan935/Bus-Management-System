@@ -1,45 +1,44 @@
 import model.Driver;
-import model.Driver;
-import exceptions.InvalidTripStatusException;
+import service.DriverService;
+import filehandling.DriverFileHandler;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Driver driver = new Driver(
-                1,
-                "Kamal",
-                "kamal@gmail.com",
-                "12345",
-                "0771234567",
-                "B123456"
+        // Create DriverService Object
+        DriverService driverService = new DriverService();
+
+        // Create Driver Objects
+        Driver driver1 = new Driver(
+                1, "Kamal", "kamal@gmail.com",
+                "12345", "0771234567", "B123456"
         );
 
-        System.out.println("===== INTERFACE TEST =====");
+        Driver driver2 = new Driver(
+                2, "Nimal", "nimal@gmail.com",
+                "67890", "0711234567", "B654321"
+        );
 
-        driver.viewAssignedBus();
+        // Add Drivers to List
+        driverService.addDriver(driver1);
+        driverService.addDriver(driver2);
 
-        driver.viewRoute();
+        // Display Drivers
+        driverService.displayDrivers();
 
-        try {
+        // Display Total Drivers
+        System.out.println("Total Drivers: "
+                + driverService.getTotalDrivers());
 
-            driver.updateTripStatus("Started");
+        // Create File Handler Object
+        DriverFileHandler fileHandler = new DriverFileHandler();
 
-            driver.updateTripStatus("Completed");
+        // Save Drivers to Text File
+        fileHandler.saveDrivers(driverService.getDrivers());
 
-            driver.updateTripStatus("WrongStatus");
-
-        } catch (InvalidTripStatusException e) {
-
-            System.out.println("Error: " + e.getMessage());
-
-        }
-
-        driver.reportBreakdown();
-
-        driver.reportAccident();
-
-        driver.requestReplacementBus();
+        // Read Drivers from Text File
+        fileHandler.readDrivers();
 
     }
 }
