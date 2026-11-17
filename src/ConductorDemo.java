@@ -2,6 +2,7 @@ import model.Conductor;
 import model.Ticket;
 import model.User;
 import service.ConductorService;
+import model.LostItemReport;
 
 public class ConductorDemo {
 
@@ -85,6 +86,45 @@ public class ConductorDemo {
                     "Without tickets now: "
                             + service.getPassengersWithoutTickets()
             );
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            System.out.printf(
+                    "Commission at 10%%: Rs. %.2f%n",
+                    service.calculateCommission(10)
+            );
+
+            LostItemReport report = service.reportLostItem(
+                    "P001",
+                    "Black wallet"
+            );
+
+            System.out.println(
+                    "Created lost item report: " + report.getReportId()
+            );
+
+            service.viewLostItemReports();
+
+            service.updateLostItemStatus(report.getReportId(), "FOUND");
+            service.viewLostItemReports();
+
+            service.updateLostItemStatus(report.getReportId(), "RETURNED");
+            service.viewLostItemReports();
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            service.calculateCommission(-5);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            service.updateLostItemStatus(999, "FOUND");
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }

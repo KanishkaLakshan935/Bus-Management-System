@@ -4,12 +4,15 @@ import model.Conductor;
 import model.Ticket;
 import java.util.ArrayList;
 import java.util.List;
+import model.LostItemReport;
 
 public class ConductorService {
 
     private final Conductor conductor;
     private final List<Ticket> tickets = new ArrayList<>();
     private int nextTicketId = 1;
+    private final List<LostItemReport> lostItemReports = new ArrayList<>();
+    private int nextReportId = 1;
 
     public ConductorService(Conductor conductor) {
         if (conductor == null) {
@@ -140,5 +143,73 @@ public class ConductorService {
 
         System.out.println("Tickets sold: " + getTicketCount());
         System.out.println("Total revenue: Rs. " + getTotalRevenue());
+    }
+
+    public double calculateCommission(double percentage) {
+        if (Double.isNaN(percentage)
+                || Double.isInfinite(percentage)
+                || percentage < 0
+                || percentage > 100) {
+
+            throw new IllegalArgumentException(
+                    "Commission percentage must be between 0 and 100."
+            );
+        }
+
+        double commission = getTotalRevenue() * percentage / 100.0;
+
+        return Math.round(commission * 100.0) / 100.0;
+    }
+
+    public LostItemReport reportLostItem(String passengerId,
+                                         String description) {
+
+        passengerId = validatePassengerId(passengerId);
+
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Item description cannot be empty."
+            );
+        }
+
+        LostItemReport report = new LostItemReport(
+                nextReportId,
+                passengerId,
+                description.trim()
+        );
+
+        lostItemReports.add(report);
+        nextReportId++;
+
+        return report;
+    }
+
+    public void updateLostItemStatus(int reportId, String newStatus) {
+        for (LostItemReport report : lostItemReports) {
+            if (report.getReportId() == reportId) {
+                report.updateStatus(newStatus);
+                return;
+            }
+        }
+
+        throw new IllegalArgumentException("Report ID was not found.");
+    }
+
+    public void viewLostItemReports() {
+        System.out.println("--- LOST ITEM REPORTS ---");
+
+        if (lostItemReports.isEmpty()) {
+            System.out.println("No lost item reports.");
+            return;
+        }
+
+        for (LostItemReport report : lostItemReports) {
+            System.out.println(
+                    "Report " + report.getReportId()
+                            + " | Passenger: " + report.getPassengerId()
+                            + " | Item: " + report.getDescription()
+                            + " | Status: " + report.getStatus()
+            );
+        }
     }
 }
