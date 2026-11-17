@@ -212,4 +212,38 @@ public class ConductorService {
             );
         }
     }
+
+    public Conductor getConductor() {
+        return conductor;
+    }
+
+    public List<Ticket> getTickets() {
+        return new ArrayList<>(tickets);
+    }
+
+    public List<LostItemReport> getLostItemReports() {
+        return new ArrayList<>(lostItemReports);
+    }
+
+    public void restoreTicket(String passengerId, int fare, boolean active) {
+        passengerId = validatePassengerId(passengerId);
+
+        if (fare <= 0) {
+            throw new IllegalArgumentException("Invalid saved fare.");
+        }
+
+        if (active && (!conductor.getOnboardPassengerIds().contains(passengerId)
+                || findActiveTicket(passengerId) != null)) {
+            throw new IllegalArgumentException("Invalid saved active ticket.");
+        }
+
+        Ticket ticket = new Ticket(nextTicketId, passengerId, fare);
+
+        if (!active) {
+            ticket.closeTicket();
+        }
+
+        tickets.add(ticket);
+        nextTicketId++;
+    }
 }
